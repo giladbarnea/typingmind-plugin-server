@@ -1,0 +1,32 @@
+{
+  "name": "shared-pad",
+  "version": "0.1.0",
+  "description": "A persistent plain-text pad shared by user and assistant.",
+  "actions": [
+    {
+      "name": "get_pad",
+      "description": "Fetch the current text pad.",
+      "http": {
+        "method": "GET",
+        "url": "https://typingmind-plugin-server-j330.onrender.com/pad"
+      },
+      "parameters": { "type": "object", "properties": {} }
+    },
+    {
+      "name": "set_pad",
+      "description": "Replace the pad with new text.",
+      "http": {
+        "method": "PUT",
+        "url": "https://typingmind-plugin-server-j330.onrender.com/pad"
+      },
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" }
+        },
+        "required": ["text"]
+      }
+    }
+  ]
+}
+
