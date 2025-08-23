@@ -26,7 +26,11 @@
 	const setBodyRightMargin = (px) => { document.body.style.marginRight = px ? `${px}px` : ""; };
   
 	const mountPanel = () => {
-	  if (mounted()) return;
+	  if (mounted()) {
+		console.log("Panel already mounted");
+		return;
+	  }
+	  console.log("Mounting panel");
   
 	  if (!document.getElementById(`${PANEL_ID}-style`)) {
 		const style = document.createElement("style");
