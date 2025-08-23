@@ -1,5 +1,59 @@
 // shared-pad-ext.js (chat-only; per-chat pad)
-(() => {
+/**
+ * Executes a callback when the page has "settled" down.
+ * This is useful for modern, reactive websites where content loads asynchronously.
+ *
+ * @param {() => void} callback The function to call when the page is settled.
+ * @param {number} [settleTime=500] The time in milliseconds of inactivity to wait for.
+ * @param {Element} [targetNode=document.body] The DOM element to observe for mutations.
+ */
+function onPageSettled(
+	callback,
+	settleTime = 500,
+	targetNode = document.body,
+) {
+	let settleTimer;
+
+	// Create an observer instance linked to a callback function
+	const observer = new MutationObserver((mutationsList, obs) => {
+		// We've detected a mutation, so we clear the existing timer
+		clearTimeout(settleTimer);
+
+		// And start a new one
+		settleTimer = setTimeout(() => {
+			// If this timer completes, it means no mutations have occurred in `settleTime` ms.
+			console.log("[onPageSettled] Page has settled. Firing callback.");
+
+			// We can now disconnect the observer to prevent further checks
+			obs.disconnect();
+
+			// And execute the user's callback function
+			callback();
+		}, settleTime);
+	});
+
+	// Configuration for the observer:
+	const config = {
+		childList: true,
+		subtree: true,
+		attributes: true,
+	};
+
+	// Start observing the target node for configured mutations
+	observer.observe(targetNode, config);
+
+	// We also start the initial timer, in case the page is already static
+	// or loads faster than the observer can be set up.
+	settleTimer = setTimeout(() => {
+		console.log(
+			"[onPageSettled] Initial settle time reached. Firing callback.",
+		);
+		observer.disconnect();
+		callback();
+	}, settleTime);
+}
+
+onPageSettled(() => {
 	const API_URL = "https://typingmind-plugin-server-j330.onrender.com/pad";
 	const PANEL_ID = "tm-shared-pad";
 	const PANEL_WIDTH = 420;
@@ -128,5 +182,4 @@
 	  if (shouldMount && !mounted()) mountPanel();
 	  else if (!shouldMount && mounted()) unmountPanel();
 	}).observe(document.documentElement, { childList: true, subtree: true });
-  })();
-  
+  });
