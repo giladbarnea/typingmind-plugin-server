@@ -1,4 +1,4 @@
-// shared-pad-ext.js (chat-only; per-chat pad)
+// shared-pad-extension.js (chat-only; per-chat pad)
 /**
  * Executes a callback when the page has "settled" down.
  * This is useful for modern, reactive websites where content loads asynchronously.
