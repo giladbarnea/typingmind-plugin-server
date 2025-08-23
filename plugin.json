@@ -1,32 +1,58 @@
 {
-  "name": "shared-pad",
-  "version": "0.1.0",
-  "description": "A persistent plain-text pad shared by user and assistant.",
-  "actions": [
-    {
-      "name": "get_pad",
-      "description": "Fetch the current text pad.",
-      "http": {
-        "method": "GET",
-        "url": "https://typingmind-plugin-server-j330.onrender.com/pad"
-      },
-      "parameters": { "type": "object", "properties": {} }
-    },
-    {
-      "name": "set_pad",
-      "description": "Replace the pad with new text.",
-      "http": {
-        "method": "PUT",
-        "url": "https://typingmind-plugin-server-j330.onrender.com/pad"
-      },
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "text": { "type": "string" }
-        },
-        "required": ["text"]
-      }
-    }
-  ]
+"id": "shared_pad",
+"uuid": "4b0ecb8a-3a76-4f23-91a3-0d89d4b59d10",
+"emoji": "🗒️",
+"title": "Shared Pad",
+"description": "A plain shared text pad that both you and the assistant can read and overwrite during the conversation.",
+"implementationType": "http",
+"outputType": "respond_to_ai",
+"openaiSpec": {
+	"name": "shared_pad",
+	"description": "Provides access to a persistent shared text pad (fetch or overwrite).",
+	"parameters": {
+	"type": "object",
+	"properties": {
+		"action": {
+		"type": "string",
+		"enum": ["get_pad", "set_pad"],
+		"description": "Whether to fetch or overwrite the shared pad."
+		},
+		"text": {
+		"type": "string",
+		"description": "The new text to write when action is set_pad. Ignore otherwise."
+		}
+	},
+	"required": ["action"]
+	}
+},
+"actions": [
+	{
+	"name": "get_pad",
+	"description": "Fetch the current text pad.",
+	"http": {
+		"method": "GET",
+		"url": "https://typingmind-plugin-server-j330.onrender.com/pad"
+	},
+	"parameters": {
+		"type": "object",
+		"properties": {}
+	}
+	},
+	{
+	"name": "set_pad",
+	"description": "Replace the pad with new text.",
+	"http": {
+		"method": "PUT",
+		"url": "https://typingmind-plugin-server-j330.onrender.com/pad"
+	},
+	"parameters": {
+		"type": "object",
+		"properties": {
+		"text": { "type": "string" }
+		},
+		"required": ["text"]
+	}
+	}
+]
 }
-
+  
