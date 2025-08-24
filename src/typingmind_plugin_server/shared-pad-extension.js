@@ -69,7 +69,15 @@ onPageSettled(() => {
 
 	const mounted = () => document.getElementById(PANEL_ID) != null;
 	const setBodyRightMargin = (px) => {
-		document.body.style.marginRight = px ? `${px}px` : "";
+		// Only set right margin on desktop sizes
+		const isMobile = window.innerWidth <= 768;
+		if (isMobile) {
+			document.body.style.marginRight = "";
+			document.body.style.marginBottom = px ? `${Math.round(window.innerHeight / 3)}px` : "";
+		} else {
+			document.body.style.marginRight = px ? `${px}px` : "";
+			document.body.style.marginBottom = "";
+		}
 	};
 
 	const mountPanel = () => {
@@ -83,12 +91,62 @@ onPageSettled(() => {
 			const style = document.createElement("style");
 			style.id = `${PANEL_ID}-style`;
 			style.textContent = `
-		  #${PANEL_ID}{position:fixed;top:0;right:0;height:100vh;width:${PANEL_WIDTH}px;
-			background:#2a2a2a;border-left:1px solid #555;z-index:2147483647;display:flex;flex-direction:column;font-family:monospace;}
-		  #${PANEL_ID} header{padding:6px 8px;border-bottom:1px solid #555;color:#e0e0e0;}
-		  #${PANEL_ID} header button{font-family:monospace;margin-right:6px;background:#404040;color:#e0e0e0;border:1px solid #666;}
-		  #${PANEL_ID} #status{color:#bbb;margin-left:6px;}
-		  #${PANEL_ID} textarea{flex:1;width:100%;border:none;outline:none;resize:none;font:14px/1.4 monospace;padding:8px;background:#2a2a2a;color:#e0e0e0;}
+		  #${PANEL_ID}{
+			position:fixed;
+			top:0;
+			right:0;
+			height:100vh;
+			width:${PANEL_WIDTH}px;
+			max-width:100%;
+			background:#2a2a2a;
+			border-left:1px solid #555;
+			z-index:2147483647;
+			display:flex;
+			flex-direction:column;
+			font-family:monospace;
+		  }
+		  #${PANEL_ID} header{
+			padding:6px 8px;
+			border-bottom:1px solid #555;
+			color:#e0e0e0;
+		  }
+		  #${PANEL_ID} header button{
+			font-family:monospace;
+			margin-right:6px;
+			background:#404040;
+			color:#e0e0e0;
+			border:1px solid #666;
+		  }
+		  #${PANEL_ID} #status{
+			color:#bbb;
+			margin-left:6px;
+		  }
+		  #${PANEL_ID} textarea{
+			flex:1;
+			width:100%;
+			border:none;
+			outline:none;
+			resize:none;
+			font:14px/1.4 monospace;
+			padding:8px;
+			background:#2a2a2a;
+			color:#e0e0e0;
+		  }
+		  
+		  /* Mobile responsive styles */
+		  @media (max-width: 768px) {
+			#${PANEL_ID} {
+			  top: auto;
+			  bottom: 0;
+			  left: 0;
+			  right: 0;
+			  width: 100%;
+			  height: 33.333vh;
+			  max-height: 33.333vh;
+			  border-left: none;
+			  border-top: 1px solid #555;
+			}
+		  }
 		`;
 			document.head.appendChild(style);
 		}
@@ -171,7 +229,8 @@ onPageSettled(() => {
 	const unmountPanel = () => {
 		const el = document.getElementById(PANEL_ID);
 		if (el) el.remove();
-		setBodyRightMargin(0);
+		document.body.style.marginRight = "";
+		document.body.style.marginBottom = "";
 	};
 
 	const reevaluate = () => {
@@ -182,6 +241,14 @@ onPageSettled(() => {
 	// Initial + route/DOM changes
 	reevaluate();
 	window.addEventListener("hashchange", reevaluate);
+	
+	// Handle window resize for responsive updates
+	window.addEventListener("resize", () => {
+		if (mounted()) {
+			setBodyRightMargin(PANEL_WIDTH);
+		}
+	});
+	
 	new MutationObserver(() => {
 		const shouldMount = isChatView();
 		if (shouldMount && !mounted()) mountPanel();
