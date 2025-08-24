@@ -42,6 +42,27 @@ def write_pad_text(chat_id: str | None, text: str) -> None:
     p.write_text(text, encoding="utf-8")
 
 
+def create_frontmatter(chat_id: str | None, content: str, old_content_length: int | None = None) -> str:
+    """Create frontmatter-like metadata for pad content."""
+    sanitized_chat_id = sanitize(chat_id)
+    file_path = file_for(chat_id)
+    content_length = len(content)
+    
+    metadata_lines = [
+        "---",
+        f"chat_id: {sanitized_chat_id}",
+        f"file_path: {file_path}",
+        f"content_length: {content_length}",
+    ]
+    
+    if old_content_length is not None:
+        metadata_lines.append(f"old_content_length: {old_content_length}")
+    
+    metadata_lines.append("---")
+    
+    return "\n".join(metadata_lines) + "\n" + content
+
+
 class PadPutRequest(BaseModel):
     text: str
     chat_id: str | None = None
@@ -56,19 +77,24 @@ class PadAction(BaseModel):
 @app.get("/pad")
 def get_pad() -> dict:
     # legacy: single shared file
-    return {"text": read_pad_text(None)}
+    content = read_pad_text(None)
+    return {"text": create_frontmatter(None, content)}
 
 
 @app.post("/pad")
 def pad_action(req: PadAction) -> dict:
     act = req.action.lower().strip()
     if act == "get":
-        return {"text": read_pad_text(req.chat_id)}
+        content = read_pad_text(req.chat_id)
+        return {"text": create_frontmatter(req.chat_id, content)}
     if act == "set":
         if req.text is None:
             raise HTTPException(status_code=400, detail="text is required for 'set'")
+        # Get old content length before writing
+        old_content = read_pad_text(req.chat_id)
+        old_content_length = len(old_content)
         write_pad_text(req.chat_id, req.text)
-        return {"ok": True, "text": req.text}
+        return {"ok": True, "text": create_frontmatter(req.chat_id, req.text, old_content_length)}
     raise HTTPException(status_code=400, detail="action must be 'get' or 'set'")
 
 
