@@ -491,7 +491,7 @@ wheels = [
 ]
 
 [[package]]
-name = "typingmind-plugin-server"
+name = "typingmind-shared-pad"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
