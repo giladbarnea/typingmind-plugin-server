@@ -63,7 +63,7 @@ onPageSettled(() => {
 		const m = location.hash.match(/#chat=([^&]+)/);
 		if (m?.[1]) return decodeURIComponent(m[1]);
 		throw new Error(
-			`[Shared Pad getChatId] No chat id found for location.hash=${location.hash}`,
+			`[SharedPad getChatId] No chat id found for location.hash=${location.hash}`,
 		);
 	}
 
@@ -82,10 +82,10 @@ onPageSettled(() => {
 
 	const mountPanel = () => {
 		if (mounted()) {
-			console.log("[Shared Pad mountPanel] Panel already mounted");
+			console.log("[SharedPad mountPanel] Panel already mounted");
 			return;
 		}
-		console.log("[Shared Pad mountPanel] Mounting panel");
+		console.log("[SharedPad mountPanel] Mounting panel");
 
 		if (!document.getElementById(`${PANEL_ID}-style`)) {
 			const style = document.createElement("style");
@@ -159,7 +159,7 @@ onPageSettled(() => {
 		  <button id="tm-pad-save">Save</button>
 		  <span id="status"></span>
 		</header>
-		<textarea id="tm-pad-text" spellcheck="false" placeholder="Shared pad…"></textarea>
+		<textarea id="tm-pad-text" spellcheck="false" placeholder="SharedPad…"></textarea>
 	  `;
 		document.body.appendChild(panel);
 		setBodyRightMargin(PANEL_WIDTH);
@@ -169,7 +169,7 @@ onPageSettled(() => {
 		const statusEl = $("#status");
 		const setStatus = (msg) => {
 			statusEl.textContent = msg || "";
-			console.log(`[Shared Pad setStatus] ${msg}`);
+			console.log(`[SharedPad setStatus] ${msg}`);
 		};
 
 		async function refreshPad() {
