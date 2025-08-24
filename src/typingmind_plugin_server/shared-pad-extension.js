@@ -114,7 +114,7 @@ onPageSettled(() => {
 			font-family:monospace;
 			margin-right:6px;
 			background:#404040;
-			color:#e0e0e0;
+			color:#bbb;
 			border:1px solid #666;
 		  }
 		  #${PANEL_ID} #status{
@@ -130,7 +130,7 @@ onPageSettled(() => {
 			font:14px/1.4 monospace;
 			padding:8px;
 			background:#2a2a2a;
-			color:#e0e0e0;
+			color:#bbb;
 		  }
 		  
 		  /* Mobile responsive styles */
