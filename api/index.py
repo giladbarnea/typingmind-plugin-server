@@ -1,10 +1,13 @@
-from http.server import BaseHTTPRequestHandler
+import os
+import sys
 
-class handler(BaseHTTPRequestHandler):
+# Ensure the local src/ directory is importable when running on Vercel
+CURRENT_DIR = os.path.dirname(__file__)
+SRC_DIR = os.path.normpath(os.path.join(CURRENT_DIR, "..", "src"))
+if SRC_DIR not in sys.path:
+    sys.path.append(SRC_DIR)
 
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type','text/plain')
-        self.end_headers()
-        self.wfile.write('Hello, world!'.encode('utf-8'))
-        return
+from tm_shared_pad import app as fastapi_app
+
+# Vercel's Python runtime will detect this ASGI app
+app = fastapi_app
