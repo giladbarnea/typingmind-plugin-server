@@ -84,11 +84,11 @@ onPageSettled(() => {
 			style.id = `${PANEL_ID}-style`;
 			style.textContent = `
 		  #${PANEL_ID}{position:fixed;top:0;right:0;height:100vh;width:${PANEL_WIDTH}px;
-			background:#fff;border-left:1px solid #ccc;z-index:2147483647;display:flex;flex-direction:column;font-family:monospace;}
-		  #${PANEL_ID} header{padding:6px 8px;border-bottom:1px solid #ccc;}
-		  #${PANEL_ID} header button{font-family:monospace;margin-right:6px;}
-		  #${PANEL_ID} #status{color:#555;margin-left:6px;}
-		  #${PANEL_ID} textarea{flex:1;width:100%;border:none;outline:none;resize:none;font:14px/1.4 monospace;padding:8px;background:#fff;}
+			background:#2a2a2a;border-left:1px solid #555;z-index:2147483647;display:flex;flex-direction:column;font-family:monospace;}
+		  #${PANEL_ID} header{padding:6px 8px;border-bottom:1px solid #555;color:#e0e0e0;}
+		  #${PANEL_ID} header button{font-family:monospace;margin-right:6px;background:#404040;color:#e0e0e0;border:1px solid #666;}
+		  #${PANEL_ID} #status{color:#bbb;margin-left:6px;}
+		  #${PANEL_ID} textarea{flex:1;width:100%;border:none;outline:none;resize:none;font:14px/1.4 monospace;padding:8px;background:#2a2a2a;color:#e0e0e0;}
 		`;
 			document.head.appendChild(style);
 		}
