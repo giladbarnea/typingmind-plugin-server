@@ -75,17 +75,13 @@ def ensure_frontmatter(
     return "\n".join(frontmatter_lines) + "\n" + content
 
 
-class PadGetRequest(BaseModel):
-    chat_id: str
-
-
 class PadPostRequest(BaseModel):
     text: str
     chat_id: str
 
 
-@app.get("/pad")
-def get_pad(req: PadGetRequest) -> dict:
+@app.get("/pad/{chat_id}")
+def get_pad(chat_id: str) -> dict:
     content = read_pad_text(req.chat_id)
     return {"text": ensure_frontmatter(req.chat_id, content)}
 
