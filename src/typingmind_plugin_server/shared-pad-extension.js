@@ -97,7 +97,7 @@ onPageSettled(() => {
 			right:0;
 			height:100vh;
 			width:${PANEL_WIDTH}px;
-			max-width:100%;
+			max-width:100vw;
 			background:#2a2a2a;
 			border-left:1px solid #555;
 			z-index:2147483647;
@@ -108,17 +108,17 @@ onPageSettled(() => {
 		  #${PANEL_ID} header{
 			padding:6px 8px;
 			border-bottom:1px solid #555;
-			color:#e0e0e0;
+			color:#555;
 		  }
 		  #${PANEL_ID} header button{
 			font-family:monospace;
 			margin-right:6px;
-			background:#404040;
-			color:#bbb;
+			background:#2a2a2a;
+			color:#555;
 			border:1px solid #666;
 		  }
 		  #${PANEL_ID} #status{
-			color:#bbb;
+			color:#555;
 			margin-left:6px;
 		  }
 		  #${PANEL_ID} textarea{
@@ -130,7 +130,7 @@ onPageSettled(() => {
 			font:14px/1.4 monospace;
 			padding:8px;
 			background:#2a2a2a;
-			color:#bbb;
+			color:#555;
 		  }
 		  
 		  /* Mobile responsive styles */
@@ -140,7 +140,7 @@ onPageSettled(() => {
 			  bottom: 0;
 			  left: 0;
 			  right: 0;
-			  width: 100%;
+			  width: 100vw;
 			  height: 33.333vh;
 			  max-height: 33.333vh;
 			  border-left: none;
