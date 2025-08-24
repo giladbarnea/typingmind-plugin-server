@@ -82,8 +82,8 @@ class PadPostRequest(BaseModel):
 
 @app.get("/pad/{chat_id}")
 def get_pad(chat_id: str) -> dict:
-    content = read_pad_text(req.chat_id)
-    return {"text": ensure_frontmatter(req.chat_id, content)}
+    content = read_pad_text(chat_id)
+    return {"text": ensure_frontmatter(chat_id, content)}
 
 
 @app.post("/pad")
