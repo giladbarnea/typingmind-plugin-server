@@ -16,7 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR = Path(os.getenv("PAD_DIR", Path.cwd() / "pads"))
+BASE_DIR = Path("/tmp/pads")
 BASE_DIR.mkdir(parents=True, exist_ok=True)
 
 
