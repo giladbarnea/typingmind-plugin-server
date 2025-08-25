@@ -16,7 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR = Path(os.getenv("PAD_DIR", Path.cwd() / "pads"))
+# For permission-safety in serverless/containers, default pads directory to /tmp
+BASE_DIR = Path(os.getenv("PAD_DIR", "/tmp/pads"))
 BASE_DIR.mkdir(parents=True, exist_ok=True)
 
 
