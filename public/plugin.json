@@ -1,0 +1,45 @@
+{
+	"id": "shared_pad",
+	"uuid": "4b0ecb8a-3a76-4f23-91a3-0d89d4b59d10",
+	"title": "Shared Pad",
+	"emoji": "🗒️",
+	"version": 1,
+	"implementationType": "http",
+	"httpAction": {
+		"id": "c3f8b5f2-3a2c-4b6e-9a1a-2f7f6c1a9ef0",
+		"method": "POST",
+		"url": "https://typingmind-plugin-server-j330.onrender.com/pad",
+		"hasHeaders": true,
+		"requestHeaders": "{\n  \"Content-Type\": \"application/json\"\n}",
+		"hasBody": true,
+		"requestBodyFormat": "json",
+		"requestBody": "{\n  \"action\": \"{action}\",\n  \"text\": \"{text}\",\n  \"chat_id\": \"{CHAT_ID}\"\n}",
+		"hasResultTransform": false
+	},
+	"openaiSpec": {
+		"name": "shared_pad",
+		"description": "Read or overwrite a persistent shared plain-text pad.",
+		"parameters": {
+			"type": "object",
+			"properties": {
+				"action": {
+					"type": "string",
+					"enum": [
+						"get",
+						"set"
+					],
+					"description": "Choose get to read the pad, set to overwrite it."
+				},
+				"text": {
+					"type": "string",
+					"description": "Used when action is set"
+				}
+			},
+			"required": [
+				"action"
+			]
+		}
+	},
+	"outputType": "respond_to_ai",
+	"overviewMarkdown": "A plain shared text pad that both you and the assistant can read and overwrite."
+}
