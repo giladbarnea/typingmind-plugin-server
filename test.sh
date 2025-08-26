@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 echo "hi"
 curl -i https://typingmind-plugin-server.vercel.app/hi ;
