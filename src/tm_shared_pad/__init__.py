@@ -82,15 +82,17 @@ class PadPostRequest(BaseModel):
 @app.get("/pad/{chat_id}")
 def get_pad(chat_id: str) -> dict:
     content = read_pad_text(chat_id)
-    return {"text": ensure_frontmatter(chat_id, content)}
+    # return {"text": ensure_frontmatter(chat_id, content)}
+    return {"text": content}
 
 
 @app.post("/pad/{chat_id}")
 def pad_action(chat_id: str, req: PadPostRequest) -> dict:
     # Get old content length before writing
-    old_content = read_pad_text(chat_id)
+    # old_content = read_pad_text(chat_id)
     write_pad_text(chat_id, req.text)
-    return {"ok": True, "text": ensure_frontmatter(chat_id, req.text, old_content)}
+    # return {"ok": True, "text": ensure_frontmatter(chat_id, req.text, old_content)}
+    return {"ok": True, "text": req.text}
 
 
 @app.get("/hi")
