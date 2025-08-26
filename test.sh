@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+set -a
+. .env.local
+set +a
 
 rand=$(LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 4)
 echo " ✦ Using random string: $rand"
